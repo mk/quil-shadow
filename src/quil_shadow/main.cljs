@@ -1,3 +1,7 @@
-(ns quil-shadow.main)
+(ns quil-shadow.main
+  (:require [devtools.core :as devtools]))
 
-(js/console.log "starting main…")
+(devtools/install!)
+
+(defn main! []
+  (js/console.log {:hello [1 2 3]}))
