@@ -1,0 +1,4 @@
+.calva/
+.shadow-cljs/
+.DS_Store
+public/js
