@@ -1,0 +1,9 @@
+{
+  "name": "quil-shadow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "p5": "^1.1.9"
+  }
+}
