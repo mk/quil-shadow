@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "p5": "^1.1.9"
+      "p5": "^1.1.9",
+      "imagetracerjs": "^1.2.6"
   }
 }
