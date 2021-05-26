@@ -4,33 +4,30 @@
 
 (devtools/install!)
 
-(def PHI (/ (+ 1 (Math/sqrt 5)) 2))
-
-(def palette
-  (cycle [[249 187  78]
-          [70 162 141]
-          [220 112 100]]))
 
 (defn setup []
-  (q/frame-rate 10))
+  (q/frame-rate 10)
+  (q/set-state! :image (q/load-image "pocky.png")))
 
 (defn draw []
   (q/no-stroke)
-  (q/background 255 255 236)
-  (q/with-translation [(/ (q/width) 2) (/ (q/height) 2)]
-    (doseq [i (range 1000)]
-      (let [v (+ (mod (q/frame-count) 3) i)
-            ang (* v PHI q/TWO-PI)
-            r   (* (Math/sqrt v) (q/width) (/ 70))
-            x   (* (q/cos ang) r)
-            y   (* (q/sin ang) r)
-            sz  (+ 3 (* i 0.002))]
-        (apply q/fill (nth palette i))
-        (q/ellipse x y sz sz)))))
+  (q/background 230)
+  (let [im (q/state :image)
+        modes [[:threshold] [:threshold 0.2] [:gray] [:posterize 20]
+               [:blur] [:opaque]]]
+    (when (q/loaded? im)
+      (q/image im 0 0)
+      (dotimes [i (count modes)]
+        (let [mode (get modes i)
+              dest (q/create-graphics (.-width im) (.-height im))]
+          (q/with-graphics dest
+            (q/image im 0 0)
+            (apply q/display-filter mode))
+          (q/image dest (* (inc i) (.-width im)) 0))))))
 
-(q/defsketch golden-ratio-flower
+(q/defsketch filters
   :host "host"
-  :size [500 500]
+  :size [900 600]
   :setup setup
   :draw draw)
 
